@@ -5,22 +5,22 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : kamera
-Version  : 18.08.0
-Release  : 1
-URL      : https://download.kde.org/stable/applications/18.08.0/src/kamera-18.08.0.tar.xz
-Source0  : https://download.kde.org/stable/applications/18.08.0/src/kamera-18.08.0.tar.xz
-Source99 : https://download.kde.org/stable/applications/18.08.0/src/kamera-18.08.0.tar.xz.sig
+Version  : 18.12.2
+Release  : 2
+URL      : https://download.kde.org/stable/applications/18.12.2/src/kamera-18.12.2.tar.xz
+Source0  : https://download.kde.org/stable/applications/18.12.2/src/kamera-18.12.2.tar.xz
+Source99 : https://download.kde.org/stable/applications/18.12.2/src/kamera-18.12.2.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GFDL-1.2 GPL-2.0
-Requires: kamera-lib
-Requires: kamera-license
-Requires: kamera-data
-Requires: kamera-locales
+Requires: kamera-data = %{version}-%{release}
+Requires: kamera-lib = %{version}-%{release}
+Requires: kamera-license = %{version}-%{release}
+Requires: kamera-locales = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
 BuildRequires : pkgconfig(libgphoto2)
-BuildRequires : qtbase-dev qtbase-extras mesa-dev
+BuildRequires : qtbase-dev mesa-dev
 
 %description
 Dependencies:
@@ -45,8 +45,8 @@ doc components for the kamera package.
 %package lib
 Summary: lib components for the kamera package.
 Group: Libraries
-Requires: kamera-data
-Requires: kamera-license
+Requires: kamera-data = %{version}-%{release}
+Requires: kamera-license = %{version}-%{release}
 
 %description lib
 lib components for the kamera package.
@@ -69,30 +69,31 @@ locales components for the kamera package.
 
 
 %prep
-%setup -q -n kamera-18.08.0
+%setup -q -n kamera-18.12.2
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1535169437
-mkdir clr-build
+export SOURCE_DATE_EPOCH=1549861715
+mkdir -p clr-build
 pushd clr-build
 %cmake ..
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1535169437
+export SOURCE_DATE_EPOCH=1549861715
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/kamera
-cp COPYING %{buildroot}/usr/share/doc/kamera/COPYING
-cp COPYING.DOC %{buildroot}/usr/share/doc/kamera/COPYING.DOC
+mkdir -p %{buildroot}/usr/share/package-licenses/kamera
+cp COPYING %{buildroot}/usr/share/package-licenses/kamera/COPYING
+cp COPYING.DOC %{buildroot}/usr/share/package-licenses/kamera/COPYING.DOC
 pushd clr-build
 %make_install
 popd
 %find_lang kcmkamera
+%find_lang kio5_kamera
 
 %files
 %defattr(-,root,root,-)
@@ -144,10 +145,10 @@ popd
 /usr/lib64/qt5/plugins/kio_kamera.so
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/kamera/COPYING
-/usr/share/doc/kamera/COPYING.DOC
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/kamera/COPYING
+/usr/share/package-licenses/kamera/COPYING.DOC
 
-%files locales -f kcmkamera.lang
+%files locales -f kcmkamera.lang -f kio5_kamera.lang
 %defattr(-,root,root,-)
 
