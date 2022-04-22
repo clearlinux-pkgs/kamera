@@ -5,14 +5,14 @@
 # Source0 file verified with key 0xBB463350D6EF31EF (heiko@shruuf.de)
 #
 Name     : kamera
-Version  : 21.12.3
-Release  : 37
-URL      : https://download.kde.org/stable/release-service/21.12.3/src/kamera-21.12.3.tar.xz
-Source0  : https://download.kde.org/stable/release-service/21.12.3/src/kamera-21.12.3.tar.xz
-Source1  : https://download.kde.org/stable/release-service/21.12.3/src/kamera-21.12.3.tar.xz.sig
+Version  : 22.04.0
+Release  : 38
+URL      : https://download.kde.org/stable/release-service/22.04.0/src/kamera-22.04.0.tar.xz
+Source0  : https://download.kde.org/stable/release-service/22.04.0/src/kamera-22.04.0.tar.xz
+Source1  : https://download.kde.org/stable/release-service/22.04.0/src/kamera-22.04.0.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : GFDL-1.2 GPL-2.0
+License  : BSD-3-Clause GFDL-1.2 GPL-2.0
 Requires: kamera-data = %{version}-%{release}
 Requires: kamera-lib = %{version}-%{release}
 Requires: kamera-license = %{version}-%{release}
@@ -20,8 +20,8 @@ Requires: kamera-locales = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
 BuildRequires : extra-cmake-modules-data
+BuildRequires : kdoctools-dev
 BuildRequires : pkgconfig(libgphoto2)
-BuildRequires : qtbase-dev mesa-dev
 
 %description
 Dependencies:
@@ -70,15 +70,15 @@ locales components for the kamera package.
 
 
 %prep
-%setup -q -n kamera-21.12.3
-cd %{_builddir}/kamera-21.12.3
+%setup -q -n kamera-22.04.0
+cd %{_builddir}/kamera-22.04.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1646536666
+export SOURCE_DATE_EPOCH=1650670836
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -94,11 +94,12 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1646536666
+export SOURCE_DATE_EPOCH=1650670836
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kamera
-cp %{_builddir}/kamera-21.12.3/COPYING %{buildroot}/usr/share/package-licenses/kamera/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
-cp %{_builddir}/kamera-21.12.3/COPYING.DOC %{buildroot}/usr/share/package-licenses/kamera/0c4be15f5177aafffe980ca09c0f4ca6ed741f43
+cp %{_builddir}/kamera-22.04.0/CMakePresets.json.license %{buildroot}/usr/share/package-licenses/kamera/29fb05b49e12a380545499938c4879440bd8851e
+cp %{_builddir}/kamera-22.04.0/COPYING %{buildroot}/usr/share/package-licenses/kamera/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
+cp %{_builddir}/kamera-22.04.0/COPYING.DOC %{buildroot}/usr/share/package-licenses/kamera/0c4be15f5177aafffe980ca09c0f4ca6ed741f43
 pushd clr-build
 %make_install
 popd
@@ -110,7 +111,7 @@ popd
 
 %files data
 %defattr(-,root,root,-)
-/usr/share/kservices5/kamera.desktop
+/usr/share/applications/kamera.desktop
 /usr/share/metainfo/org.kde.kamera.metainfo.xml
 /usr/share/solid/actions/solid_camera.desktop
 
@@ -151,13 +152,14 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/qt5/plugins/kcm_kamera.so
 /usr/lib64/qt5/plugins/kf5/kio/kio_kamera.so
+/usr/lib64/qt5/plugins/plasma/kcms/systemsettings_qwidgets/kamera.so
 
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/kamera/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
 /usr/share/package-licenses/kamera/0c4be15f5177aafffe980ca09c0f4ca6ed741f43
+/usr/share/package-licenses/kamera/29fb05b49e12a380545499938c4879440bd8851e
 
 %files locales -f kcmkamera.lang -f kio5_kamera.lang
 %defattr(-,root,root,-)
