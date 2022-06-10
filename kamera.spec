@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xBB463350D6EF31EF (heiko@shruuf.de)
 #
 Name     : kamera
-Version  : 22.04.1
-Release  : 39
-URL      : https://download.kde.org/stable/release-service/22.04.1/src/kamera-22.04.1.tar.xz
-Source0  : https://download.kde.org/stable/release-service/22.04.1/src/kamera-22.04.1.tar.xz
-Source1  : https://download.kde.org/stable/release-service/22.04.1/src/kamera-22.04.1.tar.xz.sig
+Version  : 22.04.2
+Release  : 40
+URL      : https://download.kde.org/stable/release-service/22.04.2/src/kamera-22.04.2.tar.xz
+Source0  : https://download.kde.org/stable/release-service/22.04.2/src/kamera-22.04.2.tar.xz
+Source1  : https://download.kde.org/stable/release-service/22.04.2/src/kamera-22.04.2.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GFDL-1.2 GPL-2.0
@@ -22,6 +22,7 @@ BuildRequires : buildreq-kde
 BuildRequires : extra-cmake-modules-data
 BuildRequires : kdoctools-dev
 BuildRequires : pkgconfig(libgphoto2)
+BuildRequires : qt6base-dev
 
 %description
 Dependencies:
@@ -70,15 +71,15 @@ locales components for the kamera package.
 
 
 %prep
-%setup -q -n kamera-22.04.1
-cd %{_builddir}/kamera-22.04.1
+%setup -q -n kamera-22.04.2
+cd %{_builddir}/kamera-22.04.2
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1652648295
+export SOURCE_DATE_EPOCH=1654836028
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -94,12 +95,12 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1652648295
+export SOURCE_DATE_EPOCH=1654836028
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kamera
-cp %{_builddir}/kamera-22.04.1/CMakePresets.json.license %{buildroot}/usr/share/package-licenses/kamera/29fb05b49e12a380545499938c4879440bd8851e
-cp %{_builddir}/kamera-22.04.1/COPYING %{buildroot}/usr/share/package-licenses/kamera/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
-cp %{_builddir}/kamera-22.04.1/COPYING.DOC %{buildroot}/usr/share/package-licenses/kamera/0c4be15f5177aafffe980ca09c0f4ca6ed741f43
+cp %{_builddir}/kamera-22.04.2/CMakePresets.json.license %{buildroot}/usr/share/package-licenses/kamera/29fb05b49e12a380545499938c4879440bd8851e
+cp %{_builddir}/kamera-22.04.2/COPYING %{buildroot}/usr/share/package-licenses/kamera/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
+cp %{_builddir}/kamera-22.04.2/COPYING.DOC %{buildroot}/usr/share/package-licenses/kamera/0c4be15f5177aafffe980ca09c0f4ca6ed741f43
 pushd clr-build
 %make_install
 popd
